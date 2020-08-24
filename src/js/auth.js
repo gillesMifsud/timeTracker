@@ -1,3 +1,5 @@
+import { getEventsFromDb } from './eventsManagement.js';
+
 const CURRENT_USER_KEY = 'currentUser';
 const TOKEN_KEY = 'tokenKey';
 
@@ -29,6 +31,7 @@ const loginWithGoogle = () => {
             };
             localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
             // ...
+            getEventsFromDb();
             activitiesContent.style.display = 'block';
             loginBtn.style.display = 'none';
         })

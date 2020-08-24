@@ -9,8 +9,8 @@ const syncEvents = () => {
     }
 };
 
-const getEventsFromDb = () => {
-    eventsListObj.forEach(obj => {});
+export const getEventsFromDb = () => {
+    // eventsListObj.forEach(obj => {});
     firebase
         .database()
         .ref('events')
