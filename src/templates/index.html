@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Time tracker</title>
+    </head>
+    <body>
+        <div class="global-layout">
+            <!-- Header -->
+            <header role="banner">
+                <nav class="navbar navbar-light bg-light">
+                    <a class="navbar-brand" href="#">
+                        <img
+                            src="{jsLogo}"
+                            width="30"
+                            height="30"
+                            class="d-inline-block align-top"
+                            alt=""
+                        />
+                        Time tracker
+                    </a>
+                </nav>
+            </header>
+            <!-- Main content -->
+            <main role="main" class="container">
+                <div id="firebaseui-auth-container">
+                    <button id="loginBtn" type="button" class="btn btn-primary">
+                        Login with Google
+                    </button>
+                </div>
+                <div id="loader" style="display: none">Loading...</div>
+
+                <div id="activities-content" style="display: none">
+                    <h2>Add an event</h2>
+                    <p>Add new event to existing list</p>
+
+                    <div class="activities-container row">
+                        <div class="col-12">
+                            <!-- Add event -->
+                            <div class="row">
+                                <div
+                                    id="addEventCard"
+                                    class="col-12 card elevation"
+                                >
+                                    <div class="form-group">
+                                        <label for="dateInput">Date</label>
+                                        <input
+                                            type="date"
+                                            class="form-control"
+                                            id="dateInput"
+                                            placeholder="Pick a date"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="activityInput"
+                                            >Activity</label
+                                        >
+                                        <select
+                                            class="form-control"
+                                            id="activityInput"
+                                        >
+                                            <option></option>
+                                            <option>Dev</option>
+                                            <option>Bug</option>
+                                            <option>Testing</option>
+                                            <option>Pto</option>
+                                            <option>Rtt</option>
+                                            <option>Ferié</option>
+                                            <option>Others</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="timeInput"
+                                            >Time (hours)</label
+                                        >
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="timeInput"
+                                            placeholder="Enter time"
+                                        />
+                                    </div>
+
+                                    <div class="card-actions">
+                                        <button
+                                            type="button"
+                                            id="addEventBtn"
+                                            class="btn btn-secondary"
+                                        >
+                                            Add
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Errors -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div id="errors"></div>
+                                </div>
+                            </div>
+                            <!-- Calendar -->
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card elevation">
+                                        <h3
+                                            class="card-header"
+                                            id="monthAndYear"
+                                        ></h3>
+                                        <table
+                                            class="table table-bordered table-responsive-sm"
+                                            id="calendar"
+                                        >
+                                            <thead>
+                                                <tr>
+                                                    <th>Sun</th>
+                                                    <th>Mon</th>
+                                                    <th>Tue</th>
+                                                    <th>Wed</th>
+                                                    <th>Thu</th>
+                                                    <th>Fri</th>
+                                                    <th>Sat</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody id="calendar-body"></tbody>
+                                        </table>
+
+                                        <div
+                                            class="d-flex align-items-center justify-content-around mb-2"
+                                        >
+                                            <button
+                                                class="btn btn-light btn-sm col-5"
+                                                id="previous"
+                                            >
+                                                Previous
+                                            </button>
+
+                                            <button
+                                                class="btn btn-light btn-sm col-5"
+                                                id="next"
+                                            >
+                                                Next
+                                            </button>
+                                        </div>
+                                        <!-- Jump to -->
+                                        <div
+                                            class="d-flex align-items-center justify-content-around mb-2"
+                                        >
+                                            <select
+                                                class="form-control col-5"
+                                                name="month"
+                                                id="month"
+                                            >
+                                                <option value="0">Jan</option>
+                                                <option value="1">Feb</option>
+                                                <option value="2">Mar</option>
+                                                <option value="3">Apr</option>
+                                                <option value="4">May</option>
+                                                <option value="5">Jun</option>
+                                                <option value="6">Jul</option>
+                                                <option value="7">Aug</option>
+                                                <option value="8">Sep</option>
+                                                <option value="9">Oct</option>
+                                                <option value="10">Nov</option>
+                                                <option value="11">Dec</option>
+                                            </select>
+
+                                            <select
+                                                class="form-control col-5"
+                                                name="year"
+                                                id="year"
+                                            >
+                                                <option value="1990">
+                                                    1990
+                                                </option>
+                                                <option value="1991">
+                                                    1991
+                                                </option>
+                                                <option value="1992">
+                                                    1992
+                                                </option>
+                                                <option value="1993">
+                                                    1993
+                                                </option>
+                                                <option value="1994">
+                                                    1994
+                                                </option>
+                                                <option value="1995">
+                                                    1995
+                                                </option>
+                                                <option value="1996">
+                                                    1996
+                                                </option>
+                                                <option value="1997">
+                                                    1997
+                                                </option>
+                                                <option value="1998">
+                                                    1998
+                                                </option>
+                                                <option value="1999">
+                                                    1999
+                                                </option>
+                                                <option value="2000">
+                                                    2000
+                                                </option>
+                                                <option value="2001">
+                                                    2001
+                                                </option>
+                                                <option value="2002">
+                                                    2002
+                                                </option>
+                                                <option value="2003">
+                                                    2003
+                                                </option>
+                                                <option value="2004">
+                                                    2004
+                                                </option>
+                                                <option value="2005">
+                                                    2005
+                                                </option>
+                                                <option value="2006">
+                                                    2006
+                                                </option>
+                                                <option value="2007">
+                                                    2007
+                                                </option>
+                                                <option value="2008">
+                                                    2008
+                                                </option>
+                                                <option value="2009">
+                                                    2009
+                                                </option>
+                                                <option value="2010">
+                                                    2010
+                                                </option>
+                                                <option value="2011">
+                                                    2011
+                                                </option>
+                                                <option value="2012">
+                                                    2012
+                                                </option>
+                                                <option value="2013">
+                                                    2013
+                                                </option>
+                                                <option value="2014">
+                                                    2014
+                                                </option>
+                                                <option value="2015">
+                                                    2015
+                                                </option>
+                                                <option value="2016">
+                                                    2016
+                                                </option>
+                                                <option value="2017">
+                                                    2017
+                                                </option>
+                                                <option value="2018">
+                                                    2018
+                                                </option>
+                                                <option value="2019">
+                                                    2019
+                                                </option>
+                                                <option value="2020">
+                                                    2020
+                                                </option>
+                                                <option value="2021">
+                                                    2021
+                                                </option>
+                                                <option value="2022">
+                                                    2022
+                                                </option>
+                                                <option value="2023">
+                                                    2023
+                                                </option>
+                                                <option value="2024">
+                                                    2024
+                                                </option>
+                                                <option value="2025">
+                                                    2025
+                                                </option>
+                                                <option value="2026">
+                                                    2026
+                                                </option>
+                                                <option value="2027">
+                                                    2027
+                                                </option>
+                                                <option value="2028">
+                                                    2028
+                                                </option>
+                                                <option value="2029">
+                                                    2029
+                                                </option>
+                                                <option value="2030">
+                                                    2030
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="row elevation">
+                                <div class="col">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Activity</th>
+                                                <th>Time</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="eventsList"></tbody>
+                                    </table>
+                                    <div>
+                                        <button
+                                            id="syncToDbBtn"
+                                            class="btn btn-secondary"
+                                        >
+                                            Sync with db
+                                        </button>
+                                        <button
+                                            id="getEventsBtn"
+                                            class="btn btn-secondary"
+                                        >
+                                            Get events
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <!-- Spacer to push footer always bottom -->
+            <div class="spacer"></div>
+            <!-- Footer -->
+            <footer>Footer content</footer>
+        </div>
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+        <!-- Add Firebase products that you want to use -->
+        <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-database.js"></script>
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+          https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script>
+            // Your web app's Firebase configuration
+            var firebaseConfig = {
+                apiKey: 'AIzaSyDnbOK-p4voeDwgI6ftbsW_Ukvb6seG0_k',
+                authDomain: 'timetracker-b6ee2.firebaseapp.com',
+                databaseURL: 'https://timetracker-b6ee2.firebaseio.com',
+                projectId: 'timetracker-b6ee2',
+                storageBucket: 'timetracker-b6ee2.appspot.com',
+                messagingSenderId: '365520929994',
+                appId: '1:365520929994:web:c0265e5e569bcd0d39e033'
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+        </script>
+    </body>
+</html>

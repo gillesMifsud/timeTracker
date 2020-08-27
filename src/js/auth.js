@@ -11,7 +11,6 @@ const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
 const loginWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     provider.addScope('https://www.googleapis.com/auth/calendar	');
-    provider.addScope('https://www.googleapis.com/auth/calendar	');
     firebase.auth().useDeviceLanguage();
     firebase
         .auth()

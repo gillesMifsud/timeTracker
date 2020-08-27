@@ -6,13 +6,15 @@ module.exports = {
     entry: { app: './src/index.js' },
     devtool: 'inline-source-map',
     devServer: {
-        contentBase: './dist'
+        contentBase: path.join(__dirname, 'dist'),
+        compress: true,
+        port: 9000
     },
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             title: 'Time tracker',
-            template: path.resolve(__dirname, 'templates/index.html'),
+            template: path.resolve(__dirname, 'src/templates/index.html'),
             filename: 'index.html',
             inject: 'body',
             chunks: ['app']
@@ -48,6 +50,18 @@ module.exports = {
                         loader: 'sass-loader',
                         options: {
                             implementation: require('sass')
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(jpe?g|png|gif|svg|ico)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'images/'
                         }
                     }
                 ]
